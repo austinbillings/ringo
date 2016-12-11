@@ -1,0 +1,27 @@
+{
+  "name": "ringo",
+  "main": "ringo.js",
+  "version": "0.0.1",
+  "description": "Finally, a pure-code alternative to AJAX loading indicator GIFs. For Angular apps.",
+  "keywords": [
+    "ajax",
+    "load",
+    "loading",
+    "gif",
+    "indicator",
+    "ring",
+    "spinner"
+  ],
+  "authors": [
+    "Austin Billings <austin@austinbillings.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/austinbillings/ringo",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
