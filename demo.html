@@ -1,0 +1,23 @@
+<!doctype HTML>
+<html ng-app="DemoSite">
+<head>
+  <title>ANother won</title>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="ringo.js"></script>
+  <script>
+  angular.module('DemoSite', ['Ringo'])
+    .controller('Base', function ($scope, RingoService) {
+      $scope.ringo = RingoService;
+    });
+  </script>
+</head>
+<body ng-controller="Base">
+  <ringo></ringo>
+  <button ng-click="ringo.initialize({color: 'orange'})">Make it Orange</button>
+  <button ng-click="ringo.initialize({color: 'black'})">Make it Black</button>
+  <button ng-click="ringo.initialize({size: '80px'})">Make it 80px</button>
+  <button ng-click="ringo.initialize({size: '30px'})">Make it 30px</button>
+  <button ng-click="ringo.initialize({thickness: '10px'})">Make it 10px thick</button>
+  <button ng-click="ringo.initialize({thickness: '3px'})">Make it 3px thick</button>
+</body>
+</html>
