@@ -1,7 +1,7 @@
 {
   "name": "ringo",
   "main": "ringo.js",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Finally, a pure-code alternative to AJAX loading indicator GIFs. For Angular apps.",
   "keywords": [
     "ajax",
