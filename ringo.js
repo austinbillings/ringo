@@ -4,7 +4,7 @@ angular.module('Ringo', [])
 
     service.defaults = function () {
       return {
-        color: 'black',
+        color: '#222',
         size: '50px',
         thickness: '2px'
       }
@@ -22,23 +22,16 @@ angular.module('Ringo', [])
       var css = service.ringoCss(service.settings);
       var tag = '<style id="ringoStyle">' + css + '</style>';
       angular.element(document).find('head').append(tag);
-      console.log('put the tag', document.getElementById('ringoStyle'));
     }
 
     service.applySettings = function (settings) {
-      if (!settings || typeof settings != 'object')
-        return console.log('no settings to apply, dippin');
-      if (settings.hasOwnProperty('size'))
-        service.settings.size = settings.size;
-      if (settings.hasOwnProperty('color'))
-        service.settings.color = settings.color;
-      if (settings.hasOwnProperty('thickness'))
-        service.settings.thickness = settings.thickness;
-      console.log('settings changed', service.settings)
+      if (!settings || typeof settings != 'object') return;
+      if (settings.hasOwnProperty('size')) service.settings.size = settings.size;
+      if (settings.hasOwnProperty('color')) service.settings.color = settings.color;
+      if (settings.hasOwnProperty('thickness')) service.settings.thickness = settings.thickness;
     }
 
     service.initialize = function (settings) {
-      console.log('initialized')
       if (settings) service.applySettings(settings);
       service.replaceStyle();
     }
@@ -82,8 +75,6 @@ angular.module('Ringo', [])
       scope: false,
       restrict: 'E',
       template: '<inner></inner>',
-      link: function (scope, el, attrs) {
-        RingoService.initialize();
-      }
+      link: function (scope, el, attrs) { RingoService.initialize(); }
     };
   }]);
