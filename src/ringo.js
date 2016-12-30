@@ -1,12 +1,12 @@
 angular.module('Ringo', [])
-  .service('RingoService', () => {
+  .service('Ringo', () => {
     let service = {};
 
     service.defaults = () => {
       return {
-        color: '#222',
-        size: '50px',
-        thickness: '2px'
+        color: '#333',
+        size: 50,
+        thickness: 2
       }
     }
 
@@ -70,11 +70,11 @@ angular.module('Ringo', [])
     }
     return service;
   })
-  .directive('ringo', ['RingoService', function (RingoService) {
+  .directive('ringo', ['Ringo', function (Ringo) {
     return {
       scope: false,
       restrict: 'E',
       template: '<inner></inner>',
-      link: (scope, el, attrs) => RingoService.initialize()
+      link: () => Ringo.initialize()
     };
   }]);

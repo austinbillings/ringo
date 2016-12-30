@@ -2,14 +2,14 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-angular.module('Ringo', []).service('RingoService', function () {
+angular.module('Ringo', []).service('Ringo', function () {
   var service = {};
 
   service.defaults = function () {
     return {
-      color: '#222',
-      size: '50px',
-      thickness: '2px'
+      color: '#333',
+      size: 50,
+      thickness: 2
     };
   };
 
@@ -49,13 +49,13 @@ angular.module('Ringo', []).service('RingoService', function () {
     return '\n        @keyframes ringspin {\n          0% { transform: rotate(0deg); }\n          100% { transform: rotate(360deg); }\n        }\n        ringo {\n          background: none;\n          position: relative;\n          display: block;\n          margin: ' + 0.2 * settings.size + 'px auto;\n          width: ' + settings.size + 'px;\n          height: ' + settings.size + 'px;\n        }\n        ringo inner {\n          position: absolute;\n          display: block;\n          width: ' + 0.8 * settings.size + 'px;\n          height: ' + 0.8 * settings.size + 'px;\n          top: ' + 0.1 * settings.size + 'px;\n          left: ' + 0.1 * settings.size + 'px;\n          border-radius: ' + 0.4 * settings.size + 'px;\n          box-shadow: 0 ' + settings.thickness + 'px 0 0 ' + settings.color + ';\n          animation: ringspin 1s linear infinite;\n        }';
   };
   return service;
-}).directive('ringo', ['RingoService', function (RingoService) {
+}).directive('ringo', ['Ringo', function (Ringo) {
   return {
     scope: false,
     restrict: 'E',
     template: '<inner></inner>',
-    link: function link(scope, el, attrs) {
-      return RingoService.initialize();
+    link: function link() {
+      return Ringo.initialize();
     }
   };
 }]);
