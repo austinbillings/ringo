@@ -10,10 +10,49 @@ angular.module('Ringo', [])
       }
     }
 
+    service.individualize = (element, attributes) => {
+      let instance = {};
+      let attrs = service.cleanAttributes(attributes);
+
+      if (!Object.keys(attrs).length) return false;
+
+      Object.keys(service.settings).forEach(setting => {
+        instance[setting] = (typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting]);
+      });
+
+      let style = {
+        outer: {
+          margin: `${(0.2 * instance.size)}px auto`,
+          width: `${instance.size}px`,
+          height: `${instance.size}px`
+        },
+        inner: {
+          boxShadow: `0 ${(instance.thickness)}px 0 0 ${instance.color}`,
+          width: `${(0.8 * instance.size)}px`,
+          height: `${(0.8 * instance.size)}px`,
+          top: `${(0.1 * instance.size)}px`,
+          left: `${(0.1 * instance.size)}px`,
+          borderRadius: `${(0.4 * instance.size)}px`,
+        }
+      };
+
+      angular.element(element)
+        .css('width', style.outer.width)
+        .css('margin', style.outer.margin)
+        .css('height', style.outer.height)
+        .find('inner')
+        .css('width', style.inner.width)
+        .css('height', style.inner.height)
+        .css('top', style.inner.top)
+        .css('left', style.inner.left)
+        .css('box-shadow', style.inner.boxShadow)
+        .css('border-radius', style.inner.borderRadius);
+    }
+
     service.settings = service.defaults();
 
-    service.removeExistingStyle = () => {
-      let ex = document.getElementById('ringoStyle');
+    service.removeExistingStyle = (id = 'ringoStyle') => {
+      let ex = document.getElementById(id);
       if (ex) ex.remove();
     }
 
@@ -38,6 +77,13 @@ angular.module('Ringo', [])
 
     service.numberize = (n) => {
       return (n === n + 0 ? n : parseInt(n.toLowerCase().replace('px', '').trim()));
+    }
+
+    service.cleanAttributes = attributes => {
+      Object.keys(attributes).forEach(attribute => {
+        if (attribute.indexOf('$') === 0) delete attributes[attribute];
+      });
+      return attributes;
     }
 
     service.ringoCss = (settings) => {
@@ -75,6 +121,9 @@ angular.module('Ringo', [])
       scope: false,
       restrict: 'E',
       template: '<inner></inner>',
-      link: () => Ringo.initialize()
+      link: (scope, element, attributes) => {
+        Ringo.initialize()
+        Ringo.individualize(element, attributes);
+      }
     };
   }]);

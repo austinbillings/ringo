@@ -6,13 +6,14 @@
   <script src="dist/ringo.js"></script>
   <script>
   angular.module('DemoSite', ['Ringo'])
-    .controller('Base', function ($scope, RingoService) {
-      $scope.ringo = RingoService;
+    .controller('Base', function ($scope, Ringo) {
+      $scope.ringo = Ringo;
     });
   </script>
 </head>
 <body ng-controller="Base">
   <ringo></ringo>
+  <ringo color="purple"></ringo>
   <button ng-click="ringo.initialize({color: 'orange'})">Make it Orange</button>
   <button ng-click="ringo.initialize({color: 'black'})">Make it Black</button>
   <button ng-click="ringo.initialize({size: '80px'})">Make it 80px</button>

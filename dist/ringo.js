@@ -13,10 +13,41 @@ angular.module('Ringo', []).service('Ringo', function () {
     };
   };
 
+  service.individualize = function (element, attributes) {
+    var instance = {};
+    var attrs = service.cleanAttributes(attributes);
+
+    if (!Object.keys(attrs).length) return false;
+
+    Object.keys(service.settings).forEach(function (setting) {
+      instance[setting] = typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting];
+    });
+
+    var style = {
+      outer: {
+        margin: 0.2 * instance.size + 'px auto',
+        width: instance.size + 'px',
+        height: instance.size + 'px'
+      },
+      inner: {
+        boxShadow: '0 ' + instance.thickness + 'px 0 0 ' + instance.color,
+        width: 0.8 * instance.size + 'px',
+        height: 0.8 * instance.size + 'px',
+        top: 0.1 * instance.size + 'px',
+        left: 0.1 * instance.size + 'px',
+        borderRadius: 0.4 * instance.size + 'px'
+      }
+    };
+
+    angular.element(element).css('width', style.outer.width).css('margin', style.outer.margin).css('height', style.outer.height).find('inner').css('width', style.inner.width).css('height', style.inner.height).css('top', style.inner.top).css('left', style.inner.left).css('box-shadow', style.inner.boxShadow).css('border-radius', style.inner.borderRadius);
+  };
+
   service.settings = service.defaults();
 
   service.removeExistingStyle = function () {
-    var ex = document.getElementById('ringoStyle');
+    var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ringoStyle';
+
+    var ex = document.getElementById(id);
     if (ex) ex.remove();
   };
 
@@ -43,6 +74,13 @@ angular.module('Ringo', []).service('Ringo', function () {
     return n === n + 0 ? n : parseInt(n.toLowerCase().replace('px', '').trim());
   };
 
+  service.cleanAttributes = function (attributes) {
+    Object.keys(attributes).forEach(function (attribute) {
+      if (attribute.indexOf('$') === 0) delete attributes[attribute];
+    });
+    return attributes;
+  };
+
   service.ringoCss = function (settings) {
     settings.size = service.numberize(settings.size);
     settings.thickness = service.numberize(settings.thickness);
@@ -54,8 +92,9 @@ angular.module('Ringo', []).service('Ringo', function () {
     scope: false,
     restrict: 'E',
     template: '<inner></inner>',
-    link: function link() {
-      return Ringo.initialize();
+    link: function link(scope, element, attributes) {
+      Ringo.initialize();
+      Ringo.individualize(element, attributes);
     }
   };
 }]);
