@@ -11,13 +11,13 @@ angular.module('Ringo', [])
     }
 
     service.individualize = (element, attributes) => {
-      let instance = {};
+      var instance = {};
       let attrs = service.cleanAttributes(attributes);
 
       if (!Object.keys(attrs).length) return false;
 
       for (let setting in service.settings) {
-        instance[setting] = (typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting]);
+        instance[setting] = (attrs && typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting]);
       };
 
 
@@ -48,6 +48,8 @@ angular.module('Ringo', [])
         .css('left', style.inner.left)
         .css('box-shadow', style.inner.boxShadow)
         .css('border-radius', style.inner.borderRadius);
+
+      return true;
     }
 
     service.settings = service.defaults();

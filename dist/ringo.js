@@ -20,7 +20,7 @@ angular.module('Ringo', []).service('Ringo', function () {
     if (!Object.keys(attrs).length) return false;
 
     for (var setting in service.settings) {
-      instance[setting] = typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting];
+      instance[setting] = attrs && typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting];
     };
 
     var style = {
@@ -40,6 +40,8 @@ angular.module('Ringo', []).service('Ringo', function () {
     };
 
     angular.element(element).css('width', style.outer.width).css('margin', style.outer.margin).css('height', style.outer.height).find('inner').css('width', style.inner.width).css('height', style.inner.height).css('top', style.inner.top).css('left', style.inner.left).css('box-shadow', style.inner.boxShadow).css('border-radius', style.inner.borderRadius);
+
+    return true;
   };
 
   service.settings = service.defaults();
