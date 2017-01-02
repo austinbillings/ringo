@@ -19,9 +19,9 @@ angular.module('Ringo', []).service('Ringo', function () {
 
     if (!Object.keys(attrs).length) return false;
 
-    Object.keys(service.settings).forEach(function (setting) {
+    for (var setting in service.settings) {
       instance[setting] = typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting];
-    });
+    };
 
     var style = {
       outer: {
@@ -95,6 +95,15 @@ angular.module('Ringo', []).service('Ringo', function () {
     link: function link(scope, element, attributes) {
       Ringo.initialize();
       Ringo.individualize(element, attributes);
+      attributes.$observe('color', function () {
+        return Ringo.individualize(element, attributes);
+      });
+      attributes.$observe('size', function () {
+        return Ringo.individualize(element, attributes);
+      });
+      attributes.$observe('thickness', function () {
+        return Ringo.individualize(element, attributes);
+      });
     }
   };
 }]);

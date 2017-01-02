@@ -16,9 +16,10 @@ angular.module('Ringo', [])
 
       if (!Object.keys(attrs).length) return false;
 
-      Object.keys(service.settings).forEach(setting => {
+      for (let setting in service.settings) {
         instance[setting] = (typeof attrs[setting] != 'undefined' ? attrs[setting] : service.settings[setting]);
-      });
+      };
+
 
       let style = {
         outer: {
@@ -124,6 +125,9 @@ angular.module('Ringo', [])
       link: (scope, element, attributes) => {
         Ringo.initialize()
         Ringo.individualize(element, attributes);
+        attributes.$observe('color', () => Ringo.individualize(element, attributes));
+        attributes.$observe('size', () => Ringo.individualize(element, attributes));
+        attributes.$observe('thickness', () => Ringo.individualize(element, attributes));
       }
     };
   }]);
