@@ -1,24 +1,49 @@
 <!doctype HTML>
 <html ng-app="DemoSite">
 <head>
-  <title>ANother won</title>
+  <title>Another won</title>
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="dist/ringo.js"></script>
   <script>
   angular.module('DemoSite', ['Ringo'])
     .controller('Base', function ($scope, Ringo) {
       $scope.ringo = Ringo;
+      $scope.live = {
+        color: 'silver',
+        thickness: 3,
+        size: 50
+      }
     });
   </script>
 </head>
 <body ng-controller="Base">
+
+  <h2>Ringo</h2>
   <ringo></ringo>
   <ringo color="purple"></ringo>
+
+  <h3>Init</h3>
   <button ng-click="ringo.initialize({color: 'orange'})">Make it Orange</button>
   <button ng-click="ringo.initialize({color: 'black'})">Make it Black</button>
   <button ng-click="ringo.initialize({size: '80px'})">Make it 80px</button>
   <button ng-click="ringo.initialize({size: '30px'})">Make it 30px</button>
   <button ng-click="ringo.initialize({thickness: '10px'})">Make it 10px thick</button>
   <button ng-click="ringo.initialize({thickness: '3px'})">Make it 3px thick</button>
+
+  <h4>Dynamic</h4>
+  <button ng-click="live.color = 'red'">GO red</button>
+  <button ng-click="live.color = 'yellow'">GO yellow</button>
+
+  <button ng-click="live.thickness = 10">10 thick</button>
+  <button ng-click="live.thickness = 5">5 thick</button>
+  <button ng-click="live.thickness = 2">2 thick</button>
+  <button ng-click="live.thickness = 1">1 thick</button>
+
+
+  <button ng-click="live.size = 40">40 big</button>
+  <button ng-click="live.size = 80">80 big</button>
+  <button ng-click="live.size = 120">120 big</button>
+  {{live}}
+  <ringo ring-color="{{live.color}}" ring-thickness="{{live.thickness}}" ring-size="{{live.size}}"></ringo>
 </body>
 </html>

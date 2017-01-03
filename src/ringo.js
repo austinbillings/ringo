@@ -83,10 +83,14 @@ angular.module('Ringo', [])
     }
 
     service.cleanAttributes = attributes => {
-      Object.keys(attributes).forEach(attribute => {
-        if (attribute.indexOf('$') === 0) delete attributes[attribute];
+      var output = {};
+      ['color', 'size', 'thickness'].forEach(attr => {
+        let attrName = 'ring-' + attr;
+        if (attrName in attributes) {
+          output[attr] = attributes[attrName];
+        }
       });
-      return attributes;
+      return output;
     }
 
     service.ringoCss = (settings) => {
@@ -127,9 +131,9 @@ angular.module('Ringo', [])
       link: (scope, element, attributes) => {
         Ringo.initialize()
         Ringo.individualize(element, attributes);
-        attributes.$observe('color', () => Ringo.individualize(element, attributes));
-        attributes.$observe('size', () => Ringo.individualize(element, attributes));
-        attributes.$observe('thickness', () => Ringo.individualize(element, attributes));
+        attributes.$observe('ring-color', () => Ringo.individualize(element, attributes));
+        attributes.$observe('ring-size', () => Ringo.individualize(element, attributes));
+        attributes.$observe('ring-thickness', () => Ringo.individualize(element, attributes));
       }
     };
   }]);
